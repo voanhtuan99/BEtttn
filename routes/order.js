@@ -58,7 +58,18 @@ router.put("/:id", async (req, res) => {
         else res.json({ successful: true, message: 'Cập nhật sản phẩm thành công', updateOrder })
 
     } catch (error) {
+        res.status(500).json({ successful: false, message: 'Lỗi server' })
+    }
+})
 
+
+router.get("/", verifyToken, async (req, res) => {
+    console.log("listorder")
+    try {
+        const Orders = await Order.find({})
+        res.json({ successful: true, message: "Lay list Order thanh cong", Orders })
+    } catch (error) {
+        res.status(500).json({ successful: false, message: 'Lỗi server' })
     }
 })
 
