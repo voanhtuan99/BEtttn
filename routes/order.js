@@ -6,7 +6,7 @@ const Order = require('../models/Order')
 const verifyToken = require('../middleware/auth')
 
 router.post('/insert', async (req, res) => {
-    const { TrangThai, user, diachinhanhang } = req.body
+    const { TrangThai, user, diachinhanhang, TongTien } = req.body
 
     if (!TrangThai || !user) return res.status(401).json({ successful: false, message: "Tạo đơn đặt hàng tất bại" })
 
@@ -14,7 +14,8 @@ router.post('/insert', async (req, res) => {
         const newOrder = new Order({
             TrangThai: TrangThai,
             user: user,
-            diachinhanhang: diachinhanhang
+            diachinhanhang: diachinhanhang,
+            TongTien: TongTien
         })
 
         await newOrder.save()
@@ -33,7 +34,7 @@ router.post('/insert', async (req, res) => {
 //Update
 
 router.put("/:id", async (req, res) => {
-    const { TrangThai, user, diachinhanhang } = req.body
+    const { TrangThai, user, diachinhanhang, TongTien } = req.body
     console.log(`${req.params.id}    ${TrangThai}   ${user}`)
     if (!TrangThai) res.status(401).json({ successful: false, message: "Cập nhật đơn đặt hàng thất bại" })
 
@@ -41,8 +42,8 @@ router.put("/:id", async (req, res) => {
         let updateOrder = ({
             TrangThai: TrangThai,
             user: user,
-            diachinhanhang: diachinhanhang
-
+            diachinhanhang: diachinhanhang,
+            TongTien: TongTien
         })
 
         const updateCondition = { _id: req.params.id }

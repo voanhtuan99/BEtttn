@@ -13,6 +13,10 @@ const orderSchema = new Schema({
     diachinhanhang: {
         type: String,
     },
+    TongTien: {
+        type: Number,
+        require: true
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'users'
