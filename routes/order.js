@@ -74,4 +74,14 @@ router.get("/", verifyToken, async (req, res) => {
     }
 })
 
+router.get("/:id", verifyToken, async (req, res) => {
+    try {
+        const OrderGet = await Order.findOne({ _id: req.params.id })
+        res.json({ successful: true, message: "Lay list Order thanh cong", OrderGet })
+    } catch (error) {
+        res.status(500).json({ successful: false, message: 'Lỗi server' })
+    }
+})
+
+
 module.exports = router
