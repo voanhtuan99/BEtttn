@@ -12,6 +12,8 @@ const orderRouter = require('./routes/order')
 const detailOrderRouter = require('./routes/detailOrder')
 const congtyRouter = require('./routes/congty')
 const phieunhapRouter = require('./routes/phieuxuatnhap')
+const ctphieuRouter = require('./routes/ctphieuxn')
+
 
 const cors = require('cors')
 const connectDB = async () => {
@@ -50,6 +52,8 @@ app.use('/api/order', orderRouter)
 app.use('/api/detailorder', detailOrderRouter)
 app.use('/api/congty', congtyRouter)
 app.use('/api/phieuxuatnhap', phieunhapRouter)
+app.use('/api/ctphieu', ctphieuRouter)
+
 
 
 const PORT = process.env.PORT || 5000;
