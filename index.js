@@ -10,6 +10,9 @@ const cartRouter = require('./routes/cart')
 const cartDetailRouter = require('./routes/cartDetail')
 const orderRouter = require('./routes/order')
 const detailOrderRouter = require('./routes/detailOrder')
+const congtyRouter = require('./routes/congty')
+const phieunhapRouter = require('./routes/phieuxuatnhap')
+
 const cors = require('cors')
 const connectDB = async () => {
     try {
@@ -34,12 +37,7 @@ connectDB()
 
 
 const app = express()
-// app.use(function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-//     next();
-// });
+
 app.use(cors())
 app.use(express.json())
 
@@ -50,9 +48,8 @@ app.use('/api/cart', cartRouter)
 app.use('/api/cartdetail', cartDetailRouter)
 app.use('/api/order', orderRouter)
 app.use('/api/detailorder', detailOrderRouter)
-app.use('/api/detailorder', detailOrderRouter)
-
-
+app.use('/api/congty', congtyRouter)
+app.use('/api/phieuxuatnhap', phieunhapRouter)
 
 
 const PORT = process.env.PORT || 5000;
