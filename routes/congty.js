@@ -6,7 +6,7 @@ const CongTy = require('../models/CongTy')
 const verifyToken = require('../middleware/auth')
 
 router.post("/insert", verifyToken, async (req, res) => {
-    const { TenCongTy, DiaChi, sdt } = req.body
+    const { TenCongTy, DiaChi, sdt, LoaiCongTy } = req.body
 
     if (!TenCongTy || !DiaChi || !sdt) return res.status(400).json({ successful: false, message: "Không được để trống" })
 
@@ -16,7 +16,8 @@ router.post("/insert", verifyToken, async (req, res) => {
         const newcongty = new CongTy({
             TenCongTy: TenCongTy,
             DiaChi: DiaChi,
-            sdt: sdt
+            sdt: sdt,
+            LoaiCongTy: LoaiCongTy
         })
         await newcongty.save()
         res.json({ successful: true, message: "Thêm 1 công ty thành công", newcongty })

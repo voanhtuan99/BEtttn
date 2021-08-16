@@ -13,6 +13,10 @@ const congtySchema = new Schema({
     sdt: {
         type: String,
         required: true
+    },
+    LoaiCongTy: {
+        type: String,
+        enum: ["Nhà Xuất Bản", "Vận Chuyển"]
     }
 })
 
