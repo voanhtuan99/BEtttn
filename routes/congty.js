@@ -35,6 +35,15 @@ router.get("/", verifyToken, async (req, res) => {
     }
 })
 
-
+router.get("/loaict", verifyToken, async (req, res) => {
+    const { LoaiCongTy } = req.body
+    if (!LoaiCongTy) return res.status(400).json({ successful: false, message: "Vui long dien du thong tin" })
+    try {
+        const listCongty = await CongTy.find({ LoaiCongTy })
+        res.json({ successful: true, message: "Lấy danh sách công ty thành công", listCongty })
+    } catch (error) {
+        res.status(500).json({ successful: false, message: 'Server bị lỗi' })
+    }
+})
 
 module.exports = router
