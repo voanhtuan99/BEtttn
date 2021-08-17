@@ -35,11 +35,9 @@ router.get("/", verifyToken, async (req, res) => {
     }
 })
 
-router.get("/loaict", verifyToken, async (req, res) => {
-    const { LoaiCongTy } = req.body
-    if (!LoaiCongTy) return res.status(400).json({ successful: false, message: "Vui long dien du thong tin" })
+router.get("/:loaict", verifyToken, async (req, res) => {
     try {
-        const listCongty = await CongTy.find({ LoaiCongTy })
+        const listCongty = await CongTy.find({ LoaiCongTy: req.params.loaict })
         res.json({ successful: true, message: "Lấy danh sách công ty thành công", listCongty })
     } catch (error) {
         res.status(500).json({ successful: false, message: 'Server bị lỗi' })
