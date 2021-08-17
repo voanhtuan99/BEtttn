@@ -26,11 +26,9 @@ router.post("/insert", verifyToken, async (req, res) => {
     }
 })
 
-router.get("/listphieu", verifyToken, async (req, res) => {
-    const { LoaiPhieu } = req.body
-    if (!LoaiPhieu) return res.status(400).json({ successful: false, message: "Điền đủ thông tin" })
+router.get("/:loaiphieu", verifyToken, async (req, res) => {
     try {
-        const listphieunhap = await PhieuNhap.find({ LoaiPhieu })
+        const listphieunhap = await PhieuNhap.find({ LoaiPhieu: req.params.loaiphieu })
         if (!listphieunhap) return res.status(401).json({ successful: false, message: "Không có loại phiếu này" })
         res.json({ successful: true, message: "Lấy ds phiếu thành công", listphieunhap })
     } catch (error) {
