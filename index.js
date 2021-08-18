@@ -13,6 +13,8 @@ const detailOrderRouter = require('./routes/detailOrder')
 const congtyRouter = require('./routes/congty')
 const phieunhapRouter = require('./routes/phieuxuatnhap')
 const ctphieuRouter = require('./routes/ctphieuxn')
+const selectRouter = require('./routes/select')
+
 
 
 const cors = require('cors')
@@ -59,6 +61,7 @@ app.use('/api/detailorder', detailOrderRouter)
 app.use('/api/congty', congtyRouter)
 app.use('/api/phieuxuatnhap', phieunhapRouter)
 app.use('/api/ctphieu', ctphieuRouter)
+app.use('/api/select', selectRouter)
 
 
 
