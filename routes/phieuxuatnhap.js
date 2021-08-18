@@ -8,7 +8,7 @@ const verifyToken = require('../middleware/auth')
 router.post("/insert", verifyToken, async (req, res) => {
     const { NgayNhap, CongTy, LoaiPhieu } = req.body
 
-    if (!CongTy) res.status(400).json({ successful: false, message: "Điền thiếu thông tin" })
+    if (!CongTy) return res.status(400).json({ successful: false, message: "Điền thiếu thông tin" })
 
     try {
         const phieunhapnew = new PhieuNhap({
