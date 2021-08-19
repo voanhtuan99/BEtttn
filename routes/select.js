@@ -75,7 +75,25 @@ function sortList(asc_or_dec, list, num) {
     return list;
 };
 
+function sortAll(asc_or_dec, list) {
+    for (var i = 0; i < list.length - 1; i++) {
+        // console.log(list[i].sum);
+        for (var j = i + 1; j < list.length; j++) {
+            if (list[i].sum > list[j].sum) {
+                var temp = list[i];
+                list[i] = list[j];
+                list[j] = temp;
+            }
+        }
+    }
 
+    if (asc_or_dec == "dec") {
+        list = list.reverse();
+    }
+
+
+    return list;
+};
 
 router.get("/4sachbanchay", async (req, res) => {
     var listRes = [];
@@ -181,12 +199,13 @@ router.get("/sachbanchay", async (req, res) => {
         });
     });
 
+    listRes = sortAll('dec', listRes)
+
     let listnew = []
     listRes.forEach(elm => {
         listnew.push(elm.product)
     })
-
-    res.json({ listnew });
+    res.json({ listRes });
 })
 
 
