@@ -204,4 +204,36 @@ router.post("/timsachtheoloai", async (req, res) => {
 
 })
 
+
+router.get("/timsachsieusale", async (req, res) => {
+    let listProduct = await Product.find({})
+    let listnew = []
+    listProduct.forEach((product, index) => {
+        if (parseInt(product.KhuyenMai) > 0) {
+            listnew.push(product)
+        }
+    })
+
+    listnew = sortDiscount(listnew, 4)
+    res.json({ listnew })
+})
+
+
+function sortDiscount(list, num) {
+    for (var i = 0; i < list.length - 1; i++) {
+        // console.log(list[i].sum);
+        for (var j = i + 1; j < list.length; j++) {
+            if (list[i].KhuyenMai > list[j].KhuyenMai) {
+                var temp = list[i];
+                list[i] = list[j];
+                list[j] = temp;
+            }
+        }
+    }
+    list = list.reverse();
+
+    list = list.slice(0, num);
+    return list;
+};
+
 module.exports = router
