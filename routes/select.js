@@ -189,4 +189,19 @@ router.get("/sachbanchay", async (req, res) => {
     res.json({ listnew });
 })
 
+
+router.post("/timsachtheoloai", async (req, res) => {
+    const { id } = req.body
+    if (!id) return res.status(400).json({ successful: false, message: "Vui lòng điền đủ thông tin" })
+
+    try {
+        const productget = await Product.find({ loaisp: id })
+        if (!productget) return res.status(403).json({ successful: false, message: "Không tìm thấy sách có thể loại này" })
+        else res.json({ successful: true, message: `Lấy các sách có id thể loại ${id} thành công`, productget })
+    } catch (error) {
+        res.status(500).json({ successful: false, message: 'Server bị lỗi' })
+    }
+
+})
+
 module.exports = router
