@@ -181,8 +181,12 @@ router.get("/sachbanchay", async (req, res) => {
         });
     });
 
+    let listnew = []
+    listRes.forEach(elm => {
+        listnew.push(elm.product)
+    })
 
-    res.json({ listRes });
+    res.json({ listnew });
 })
 
 module.exports = router
