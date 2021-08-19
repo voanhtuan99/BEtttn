@@ -205,7 +205,7 @@ router.get("/sachbanchay", async (req, res) => {
     listRes.forEach(elm => {
         listnew.push(elm.product)
     })
-    res.json({ listRes });
+    res.json({ listnew });
 })
 
 
