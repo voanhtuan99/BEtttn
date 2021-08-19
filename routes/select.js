@@ -116,7 +116,7 @@ router.get("/4sachbanchay", async (req, res) => {
 
     listRes = sortList('dec', listRes, 4);
 
-    res.send(listRes);
+    res.json({ listRes });
 })
 
 
