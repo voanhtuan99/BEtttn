@@ -132,4 +132,57 @@ router.get("/4sachmoinhat", async (req, res) => {
     })
 })
 
+router.get("/sachgiamgia", async (req, res) => {
+    var listProduct = await Product.find({});
+    let listnew = []
+    listProduct.forEach((product, index) => {
+        if (parseInt(product.KhuyenMai) > 0) {
+            listnew.push(product)
+        }
+    })
+    res.json({ listnew })
+})
+
+
+router.get("/sachbanchay", async (req, res) => {
+    var listRes = [];
+    var listResCTDDH = [];
+
+    var listDDH = await Order.find({});
+    var listCTDDH = await detailOrder.find({});
+    var listProduct = await Product.find({});
+
+    listProduct.forEach(element => {
+        listRes.push(new ResTKe(element, 0));
+    });
+
+    listDDH.forEach(element => {
+        var ngaydat = element.ngaydat;
+        // console.log(element._id);
+        listCTDDH.forEach(element1 => {
+            if (JSON.stringify(element1.idorder) == JSON.stringify(element._id)) {
+                // console.log(element1.IdDDH + "_" + element1._id + "_" + element1.IdSP + "_" + element1.Soluong);
+                listResCTDDH.push(element1);
+            }
+        });
+
+    });
+
+    listRes.forEach(element => {
+        // console.log(element.product._id);
+        listResCTDDH.forEach(element1 => {
+            // console.log(element1.IdSP + "_" + element1.Soluong);
+            if (JSON.stringify(element.product._id) == JSON.stringify(element1.idsp)) {
+                // console.log(element.sum);
+                element.sum = parseInt(element.sum) + parseInt(element1.SoLuong);
+                // console.log(element.sum);
+
+            }
+        });
+    });
+
+
+    res.json({ listRes });
+})
+
 module.exports = router
