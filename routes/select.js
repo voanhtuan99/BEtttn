@@ -255,4 +255,34 @@ function sortDiscount(list, num) {
     return list;
 };
 
+
+router.post("/orderofuser", verifyToken, async (req, res) => {
+    const { id } = req.body
+
+    let listDDH = await Order.find({ user: id })
+    if (!listDDH) return res.status(400).json({ successful: false, message: "Không có id user này" })
+    else res.json({
+        successful: true,
+        message: "Lấy lish order của user thành công",
+        listDDH
+    })
+})
+
+router.post("/laytheotrangthai", verifyToken, async (req, res) => {
+    const { id, TrangThai } = req.body
+
+    let listDDH = await Order.find(
+        {
+            user: id,
+            TrangThai: TrangThai
+        }
+    )
+    if (!listDDH) return res.status(400).json({ successful: false, message: "Không có id user này" })
+    else res.json({
+        successful: true,
+        message: "Lấy lish order của user thành công",
+        listDDH
+    })
+})
+
 module.exports = router
