@@ -41,6 +41,17 @@ router.get('/all', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+        const categories = await cate.findOne({ _id: req.params.id })
+
+        res.json({ successful: true, message: "Lấy danh sách loại thành công", categories })
+    } catch (error) {
+        console.log('Lỗi: ' + error)
+        res.status(500).json({ successful: false, message: 'Server bị lỗi' })
+    }
+})
+
 router.delete('/:id', verifyToken, async (req, res) => {
     const listproduct = await Products.findOne({
         loaisp: req.params.id
