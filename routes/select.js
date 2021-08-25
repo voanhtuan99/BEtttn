@@ -3,9 +3,9 @@ const router = require('express').Router();
 const detailOrder = require('../models/detailOrder')
 const Order = require('../models/Order')
 const verifyToken = require('../middleware/auth')
-
+const PhieuNhapXuat = require('../models/PhieuXuatNhap')
 const nodemailer = require('nodemailer');
-
+const detailphieu = require('../models/phieuxnchitiet')
 router.post("/top5sach", async (req, res) => {
 
     var listRes = [];
@@ -328,5 +328,38 @@ router.post('/otpUser', async (req, res) => {
         res.status(400).json({ msg: err })
     }
 });
+
+router.post('/chartnhapxuat', verifyToken, async (req, res) => {
+    const { Thang } = req.body
+
+    const listphieu = await PhieuNhapXuat.find({})
+    const listdetail = await detailphieu.find({})
+    let tongtiennhap = 0
+    let tongtienxuat = 0
+
+    listphieu.forEach(phieu => {
+        var ngaynhap = phieu.NgayNhap
+        if ((ngaynhap.getMonth() + 1) == Thang) {
+            if (phieu.LoaiPhieu === 'Phiếu nhập') {
+                listdetail.forEach(detail => {
+                    if (JSON.stringify(phieu._id) === JSON.stringify(detail.MaPhieu)) {
+
+                        tongtiennhap += detail.SoLuong * detail.Gia
+                    }
+                })
+            }
+            else if (phieu.LoaiPhieu === 'Phiếu xuất') {
+                listdetail.forEach(detail => {
+                    if (JSON.stringify(phieu._id) === JSON.stringify(detail.MaPhieu)) {
+                        tongtienxuat += detail.SoLuong * detail.Gia
+                    }
+                })
+            }
+        }
+    })
+
+    res.json({ tongtiennhap, tongtienxuat })
+
+})
 
 module.exports = router
