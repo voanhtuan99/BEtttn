@@ -37,6 +37,30 @@ router.get("/:loaiphieu", verifyToken, async (req, res) => {
     }
 })
 
+
+router.delete("/:id", verifyToken, async (req, res) => {
+    try {
+        const phieuDeleteCondition = { _id: req.params.id }
+        var deletePhieu = await PhieuNhap.findOneAndDelete(
+            phieuDeleteCondition
+        )
+
+        if (!deletePhieu) {
+            return res.status(401).json({
+                successful: false,
+                message: 'ID phiếu không tồn tại'
+            })
+        }
+        else return res.json({
+            successful: true,
+            message: 'Xóa phiếu thành công',
+            deletePhieu
+        })
+    } catch (error) {
+
+    }
+})
+
 router.get("/", verifyToken, async (req, res) => {
 
     try {

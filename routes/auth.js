@@ -112,7 +112,18 @@ router.get('/', verifyToken, async (req, res) => {
     }
 })
 
+router.post("/kiemtragmail", async (req, res) => {
+    const { email } = req.body
+    try {
+        const usercheck = await User.findOne({ email })
+        console.log(usercheck)
+        if (usercheck) res.status(401).json({ successful: false, message: "Email đã tồn tại" })
 
+        res.json({ successful: true, message: "email hợp lệ" })
+    } catch (error) {
+        res.status(500).json({ successful: false, message: 'Server bị lỗi' })
+    }
+})
 
 
 module.exports = router

@@ -4,7 +4,7 @@ const detailOrder = require('../models/detailOrder')
 const Order = require('../models/Order')
 const verifyToken = require('../middleware/auth')
 
-
+const nodemailer = require('nodemailer');
 
 router.post("/top5sach", async (req, res) => {
 
@@ -284,5 +284,49 @@ router.post("/laytheotrangthai", verifyToken, async (req, res) => {
         listDDH
     })
 })
+
+
+const option = {
+    service: 'gmail',
+    auth: {
+        user: 'tuanvo19991604@gmail.com', // email hoặc username
+        pass: process.env.PASS_EMAIL // password
+    }
+};
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+var transporter = nodemailer.createTransport(option);
+
+router.post('/otpUser', async (req, res) => {
+    if (!req.body.email) return res.status(400).send("Email, Please!!!");
+
+    var num = randomNumber(100000, 1000000);
+
+    console.log(num);
+    try {
+        var mailOptions = {
+            from: 'tuanvo19991604@gmail@gmail.com',
+            to: req.body.email,
+            subject: 'Mã xác nhận ' + req.body.email,
+            text: `Mã xác nhận: ${num.toString()}`
+        };
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+                res.json({ successful: false, error })
+            } else {
+                console.log('Email sent: ' + info.response);
+                res.json({ successful: true, otp: num });
+            }
+        });
+
+        // res.status(200).json({result_token : token});
+    }
+    catch (err) {
+        res.status(400).json({ msg: err })
+    }
+});
 
 module.exports = router
