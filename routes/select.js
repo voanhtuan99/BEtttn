@@ -289,7 +289,7 @@ router.post("/laytheotrangthai", verifyToken, async (req, res) => {
 const option = {
     service: 'gmail',
     auth: {
-        user: 'tuanvo19991604@gmail.com', // email hoặc username
+        user: 'tuanvo991604@gmail.com', // email hoặc username
         pass: process.env.PASS_EMAIL // password
     }
 };
