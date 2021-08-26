@@ -307,7 +307,7 @@ router.post('/otpUser', async (req, res) => {
     console.log(num);
     try {
         var mailOptions = {
-            from: 'tuanvo19991604@gmail@gmail.com',
+            from: 'tuanvo991604@gmail@gmail.com',
             to: req.body.email,
             subject: 'Mã xác nhận ' + req.body.email,
             text: `Mã xác nhận: ${num.toString()}`
