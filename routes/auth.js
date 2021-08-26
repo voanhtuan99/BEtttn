@@ -126,4 +126,18 @@ router.post("/kiemtragmail", async (req, res) => {
 })
 
 
+router.post('/selectgmaildoimk', async (req, res) => {
+    const { email } = req.body
+    try {
+        const userselect = await User.findOne({ email })
+        console.log(userselect)
+        if (!userselect) return res.status(401).json({ successful: false, message: "Không tìm thấy email này" })
+
+
+        res.json({ successful: true, message: "Lấy email thành công", userselect })
+    } catch (error) {
+        res.status(500).json({ successful: false, message: 'Server bị lỗi' })
+    }
+})
+
 module.exports = router
