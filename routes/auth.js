@@ -140,4 +140,47 @@ router.post('/selectgmaildoimk', async (req, res) => {
     }
 })
 
+
+router.put('/doimk', async (req, res) => {
+    const { email, password, name, sdt, diachi, role } = req.body
+
+
+    try {
+        const hashPassword = await argon2.hash(password)
+        var updateUser = ({
+            email: email,
+            password: hashPassword,
+            name: name,
+            sdt: sdt,
+            diachi: diachi,
+            role: role
+        })
+
+        const userUpdateCondition = { email: email }
+
+        updateUser = await User.findOneAndUpdate(
+            userUpdateCondition,
+            updateUser,
+            {
+                new: true
+            }
+        )
+        if (!updateUser) {
+            return res.status(401).json({
+                successful: false,
+                message: 'User không tồn tại'
+            })
+        }
+        else return res.json({
+            successful: true,
+            message: 'Đổi mật khẩu thành công',
+            updateUser
+        })
+    } catch (error) {
+        console.log("Lỗi: " + error)
+        res.status(500).json({ successful: false, message: 'Server bị lỗi' })
+    }
+})
+
+
 module.exports = router
